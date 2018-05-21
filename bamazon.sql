@@ -10,8 +10,15 @@ CREATE TABLE products (
   department_name VARCHAR(50) NULL,
   price DECIMAL(10,2) NULL,
   stock_quantity INT NULL,
+  product_sales INT default 0,
   PRIMARY KEY (item_id)
 );
+
+CREATE TABLE departments (
+    department_id INT NOT NULL AUTO_INCREMENT,
+    department_name VARCHAR(50) NULL,
+    over_head_costs INT default 0,
+)
 
 INSERT INTO products (product_name, department_name, price, quantity)
 VALUES ("generic plunger", "home improvement", 2.50, 100),
@@ -24,3 +31,4 @@ VALUES ("generic plunger", "home improvement", 2.50, 100),
 ("Anker USB Charger", "car accessories", 3.00, 300),
 ("Detective Pikachu", "video games", 39.00, 1500),
 ("The Hate U Give", "books", 12.00, 800);
+

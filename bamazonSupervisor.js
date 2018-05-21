@@ -23,7 +23,7 @@ connection.connect(function (err) {
 
 function start() {
 
-    console.log("\nWelcome to your Bamazon management application. What would you like to do?");
+    console.log("\nWelcome to your Bamazon supervisor application. What would you like to do?");
     console.log("\n----------------------------------------------------------------\n");
     inquirer.prompt([
         {
@@ -46,6 +46,17 @@ function start() {
         }
     })
 }
+
+function viewProductSalesByDept () {
+
+
+}
+
+function createNewDept () {
+
+
+}
+
 
 function viewProducts() {
 

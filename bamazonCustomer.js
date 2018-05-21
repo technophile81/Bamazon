@@ -76,19 +76,17 @@ function placeOrder() {
             if (chosenItem.stock_quantity < user.quantity) {
                 console.log("Sorry, we only have " + chosenItem.stock_quantity + " left in stock.\nPlease enter another quantity.\n");
             } else {
-                var userTotal = user.quantity * chosenItem.price;
-                var newQuantity = chosenItem.stock_quantity - user.quantity;
-                connection.query(
-                    "UPDATE products SET ? WHERE ?",
+                var userTotal = parseInt(user.quantity) * chosenItem.price;
+                //var newQuantity = chosenItem.stock_quantity - parseInt(user.quantity);
+
+                connection.query("UPDATE products SET stock_quantity = stock_quantity - ? WHERE ?",
                     [
-                        {
-                            stock_quantity: newQuantity
-                        },
+                        parseInt(user.quantity),
+
                         {
                             item_id: chosenItem.item_id
                         }
-                    ],
-                    function (err) {
+                    ], function (err) {
                         if (err) throw err;
                         console.log("Purchase successful! Your total is: $" + userTotal + ".");
                         console.log("\n----------------------------------------------------------------\n");
@@ -97,15 +95,34 @@ function placeOrder() {
                         whatNext();
                     }
                 );
+                var productSalesTotal = userTotal + chosenItem.product_sales;
+                connection.query("UPDATE products SET product_sales = product_sales + ? WHERE ?",
+                [
+                    
+                            parseInt(productSalesTotal),
+                    
 
-            }
+                    {
+                        item_id: chosenItem.item_id
+                    }
+                ], function (err) {
+                    if (err) throw err;
+                    console.log("Product sales for this item updated to $" + productSalesTotal + ".");
+                    console.log("\n----------------------------------------------------------------\n");
+                    console.log("Thank you for shopping at Bamazon.\n");
 
+                    whatNext();
+                }
+            );
+
+
+
+              }
         });
-
     })
 }
 
-function whatNext () {
+function whatNext() {
     inquirer.prompt([
         {
             name: "choice",
@@ -113,13 +130,13 @@ function whatNext () {
             choices: ["BUY ANOTHER ITEM", "QUIT"],
             message: "\nWhat would you like to do next?\n"
         }
-    ]).then( function (answer) {
-       if (answer.choice.toUpperCase() === "BUY ANOTHER ITEM") {
-           start();
-       } else {
-           console.log("Have a wonderful day!");
-           process.exit();
-       }
+    ]).then(function (answer) {
+        if (answer.choice.toUpperCase() === "BUY ANOTHER ITEM") {
+            start();
+        } else {
+            console.log("\nHave a wonderful day!\n");
+            process.exit();
+        }
     }
-)
+    )
 }
