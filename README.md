@@ -24,7 +24,7 @@ When the customer activates the bamazonCustomer.js app, the following will happe
 
 * Receive purchase total
 
-![Image of Customer app](screenshots/nXzGGFBHi.gif)
+![Image of Customer app](screenshots/nXzGGZFBHi.gif)
 
 - - - 
 
@@ -42,7 +42,7 @@ The bamazonManager.js app will allow 'managers' to edit and add new entries into
 
 * Add New Product
 
-![Image of Manager app](screenshots/ZsNshnli05.gif)
+![Image of Manager app](screenshots/ZsNshnIi05.gif)
 
 - - - 
 
