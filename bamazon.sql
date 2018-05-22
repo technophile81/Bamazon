@@ -19,7 +19,7 @@ CREATE TABLE departments (
     department_name VARCHAR(50) NULL,
     over_head_costs decimal(10,2) DEFAULT 0.00,
     PRIMARY KEY (department_id)
-)
+);
 
 INSERT INTO products (product_name, department_name, price, quantity)
 VALUES ("generic plunger", "home improvement", 2.50, 100),
@@ -41,4 +41,4 @@ VALUES ("home improvement", 10000),
 ("home & kitchen", 70050),
 ("health", 5000),
 ("car accessories", 120000),
-("books", 3000)
+("books", 3000);

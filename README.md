@@ -14,13 +14,13 @@ This app has three modes:
 
 ## Customer
 
-When the customer activates the bamazonCustomer.js app, the following will happen:
+The bamazonCustomer.js app will allow 'customers' to purchase products currently available from Bamazon.:
 
-* Choose a product
+* User chooses a product
 
-* Choose how many units to purchase
+* User enters how many units to purchase
 
-* Receive purchase total
+* User receives purchase total
 
 ![Image of Customer app](screenshots/nXzGGZFBHi.gif)
 
@@ -28,7 +28,7 @@ When the customer activates the bamazonCustomer.js app, the following will happe
 
 ## Manager
 
-The bamazonManager.js app will allow 'managers' to edit and add new entries into the database:
+The bamazonManager.js app will allow 'managers' to edit and add new entries into the database. These are the options:
 
 * View Products for Sale
 
@@ -44,7 +44,7 @@ The bamazonManager.js app will allow 'managers' to edit and add new entries into
 
 ## Supervisor
 
-This app requires a new table to display department information and joins with the products table to obtain total profits for Bamazon. The bamazonSupervisor.js app allows 'supervisors' to do the following:
+This app tracks department information, and supervisors can add new departments and review the performance of each department:
 
 * View Product Sales by Department
 
