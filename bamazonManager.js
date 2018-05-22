@@ -25,26 +25,44 @@ function start() {
 
     console.log("\nWelcome to your Bamazon management application. What would you like to do?");
     console.log("\n----------------------------------------------------------------\n");
-    inquirer.prompt([
-        {
-            name: "choice",
-            type: "list",
-            choices: ["VIEW PRODUCTS FOR SALE", "VIEW LOW INVENTORY", "ADD TO INVENTORY", "ADD NEW PRODUCT", "QUIT"],
-            message: "\nWhat would you like to do?\n"
+
+    inquirer.prompt({
+
+        name: "choice",
+        type: "list",
+        message: "\nWhat would you like to do?\n",
+        choices: [
+            "View Products for Sale",
+            "View Low Inventory",
+            "Add to Inventory",
+            "Add New Product",
+            "Quit"
+        ]
+    }).then(function (answer) {
+
+        switch (answer.choice) {
+            case "View Products for Sale":
+                viewProducts();
+                break;
+
+            case "View Low Inventory":
+                viewLowInventory();
+                break;
+
+            case "Add to Inventory":
+                addToInventory();
+                break;
+
+            case "Add New Product":
+                addNewProduct();
+                break;
+
+            case "Quit":
+                process.exit();
+                break;
+
         }
-    ]).then(function (answer) {
-        if (answer.choice.toUpperCase() === "VIEW PRODUCTS FOR SALE") {
-            viewProducts();
-        } else if (answer.choice.toUpperCase() === "VIEW LOW INVENTORY") {
-            viewLowInventory();
-        } else if (answer.choice.toUpperCase() === "ADD TO INVENTORY") {
-            addToInventory();
-        } else if (answer.choice.toUpperCase() === "ADD NEW PRODUCT") {
-            addNewProduct();
-        } else if (answer.choice.toUpperCase() === "QUIT") {
-            process.exit();
-        }
-    })
+    });
 }
 
 function viewProducts() {
@@ -63,7 +81,7 @@ function viewProducts() {
 
         for (let item of res) {
             table.push(
-                [item.item_id, item.product_name, item.price, item.stock_quantity]
+                [item.item_id, item.product_name, item.price.toFixed(2), item.stock_quantity]
             );
         }
         console.log(table.toString());
@@ -89,7 +107,7 @@ function viewLowInventory() {
         for (let item of res) {
             if (item.stock_quantity <= 5) {
                 table.push(
-                    [item.item_id, item.product_name, item.price, item.stock_quantity]
+                    [item.item_id, item.product_name, item.price.toFixed(2), item.stock_quantity]
                 );
                 console.log(table.toString());
                 allWellStocked = false;
@@ -104,52 +122,59 @@ function viewLowInventory() {
 };
 
 function addNewProduct() {
+    connection.query('SELECT * FROM departments', function (err, res) {
 
-    inquirer.prompt([
-        {
-            name: "product",
-            type: "input",
-            message: "What is the product name?"
-        },
-        {
-            name: "department",
-            type: "input",
-            message: "What department?"
-        },
-        {
-            name: "price",
-            type: "input",
-            message: "How much does the product cost?"
-        },
-        {
-            name: "quantity",
-            type: "input",
-            message: "How many units?",
-            validate: function (value) {
-                if (isNaN(value) === false) {
-                    return true;
-                }
-                return false;
-            }
-        }
-    ])
-        .then(function (value) {
-            connection.query(
-                "INSERT INTO products SET ?",
-                {
-                    product_name: value.product,
-                    department_name: value.department,
-                    price: parseFloat(value.price),
-                    stock_quantity: parseInt(value.quantity)
+        inquirer.prompt([
+            {
+                name: "product",
+                type: "input",
+                message: "What is the product name?"
+            },
+            {
+                name: "department",
+                type: "list",
+                choices: function () {
+                    var choiceArray = [];
+                    for (let item of res) {
+                        choiceArray.push(item.department_name);
+                    }
+                    return choiceArray;
+
                 },
-                function (err) {
-                    if (err) throw err;
-                    console.log("Your product was successfully added!");
-                    start();
-                }
-            );
-        });
+                message: "\nPlease select the department.\n",
 
+            },
+            {
+                name: "price",
+                type: "input",
+                message: "How much does the product cost?"
+            },
+            {
+                name: "quantity",
+                type: "input",
+                message: "How many units?",
+                validate: function (value) {
+                    return !isNaN(value);
+                }
+            }
+        ])
+            .then(function (value) {
+                connection.query(
+                    "INSERT INTO products SET ?",
+                    {
+                        product_name: value.product,
+                        department_name: value.department,
+                        price: parseFloat(value.price),
+                        stock_quantity: parseInt(value.quantity)
+                    },
+                    function (err) {
+                        if (err) throw err;
+                        console.log("Your product was successfully added!");
+                        start();
+                    }
+                );
+            });
+    })
 
 }
 
@@ -175,11 +200,7 @@ function addToInventory() {
                 type: "input",
                 message: "Enter how many units you would like to add.",
                 validate: function (value) {
-                    if (isNaN(value)) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return !isNaN(value);
                 }
             }
         ]).then(function (user) {

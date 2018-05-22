@@ -53,11 +53,8 @@ function placeOrder() {
                 type: "input",
                 message: "How many would you like to buy?",
                 validate: function (value) {
-                    if (isNaN(value)) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return !isNaN(value);
+
                 }
             }
         ]).then(function (user) {
@@ -88,28 +85,22 @@ function placeOrder() {
                         }
                     ], function (err) {
                         if (err) throw err;
-                        console.log("Purchase successful! Your total is: $" + userTotal + ".");
+                        console.log("Purchase successful! Your total is: $" + userTotal.toFixed(2) + ".");
                         console.log("\n----------------------------------------------------------------\n");
-                        console.log("Thank you for shopping at Bamazon.\n");
 
-                        whatNext();
                     }
                 );
-                var productSalesTotal = userTotal + chosenItem.product_sales;
                 connection.query("UPDATE products SET product_sales = product_sales + ? WHERE ?",
                 [
-                    
-                            parseInt(productSalesTotal),
-                    
-
+                            userTotal,
                     {
                         item_id: chosenItem.item_id
                     }
                 ], function (err) {
                     if (err) throw err;
-                    console.log("Product sales for this item updated to $" + productSalesTotal + ".");
-                    console.log("\n----------------------------------------------------------------\n");
-                    console.log("Thank you for shopping at Bamazon.\n");
+                    //console.log("Product sales for this item updated to $" + productSalesTotal.toFixed(2) + ".");
+                    //console.log("\n----------------------------------------------------------------\n");
+                    console.log("\nThank you for shopping at Bamazon.\n");
 
                     whatNext();
                 }

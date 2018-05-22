@@ -32,3 +32,12 @@ VALUES ("generic plunger", "home improvement", 2.50, 100),
 ("Detective Pikachu", "video games", 39.00, 1500),
 ("The Hate U Give", "books", 12.00, 800);
 
+INSERT INTO departments (department_name, over_head_costs)
+VALUES ("home improvement", 10000),
+("video games", 30000),
+("movies", 24000),
+("patio & garden", 40000),
+("home & kitchen", 70050),
+("health", 5000),
+("car accessories", 120000),
+("books", 3000)
