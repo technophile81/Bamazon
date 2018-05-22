@@ -1,7 +1,5 @@
 # Bamazon
 
-- - -
-
 Your ultimate shopping experience!
 
 Bamazon is an Amazon-like storefront CLI - Node app created with MySQL and JavaScript.
@@ -12,9 +10,9 @@ This app has three modes:
 2. Manager
 3. Supervisor
 
-## Customer
-
 - - -
+
+## Customer
 
 When the customer activates the bamazonCustomer.js app, the following will happen:
 
@@ -29,8 +27,6 @@ When the customer activates the bamazonCustomer.js app, the following will happe
 - - - 
 
 ## Manager
-
-- - -
 
 The bamazonManager.js app will allow 'managers' to edit and add new entries into the database:
 
@@ -47,8 +43,6 @@ The bamazonManager.js app will allow 'managers' to edit and add new entries into
 - - - 
 
 ## Supervisor
-
-- - -
 
 This app requires a new table to display department information and joins with the products table to obtain total profits for Bamazon. The bamazonSupervisor.js app allows 'supervisors' to do the following:
 
