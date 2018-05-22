@@ -39,7 +39,6 @@ function start() {
             "Quit"
         ]
     }).then(function (answer) {
-
         switch (answer.choice) {
             case "View Products for Sale":
                 viewProducts();
@@ -60,7 +59,6 @@ function start() {
             case "Quit":
                 process.exit();
                 break;
-
         }
     });
 }
@@ -87,7 +85,6 @@ function viewProducts() {
         console.log(table.toString());
         start();
     })
-
 };
 
 function viewLowInventory() {
@@ -139,10 +136,8 @@ function addNewProduct() {
                         choiceArray.push(item.department_name);
                     }
                     return choiceArray;
-
                 },
                 message: "\nPlease select the department.\n",
-
             },
             {
                 name: "price",
@@ -175,7 +170,6 @@ function addNewProduct() {
                 );
             });
     })
-
 }
 
 function addToInventory() {

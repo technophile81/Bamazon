@@ -34,7 +34,6 @@ function start() {
 
 function placeOrder() {
     connection.query('SELECT * FROM products', function (err, res) {
-
         inquirer.prompt([
             {
                 name: "choice",
@@ -54,7 +53,6 @@ function placeOrder() {
                 message: "How many would you like to buy?",
                 validate: function (value) {
                     return !isNaN(value);
-
                 }
             }
         ]).then(function (user) {
@@ -74,12 +72,10 @@ function placeOrder() {
                 console.log("Sorry, we only have " + chosenItem.stock_quantity + " left in stock.\nPlease enter another quantity.\n");
             } else {
                 var userTotal = parseInt(user.quantity) * chosenItem.price;
-                //var newQuantity = chosenItem.stock_quantity - parseInt(user.quantity);
 
                 connection.query("UPDATE products SET stock_quantity = stock_quantity - ? WHERE ?",
                     [
                         parseInt(user.quantity),
-
                         {
                             item_id: chosenItem.item_id
                         }
@@ -87,28 +83,23 @@ function placeOrder() {
                         if (err) throw err;
                         console.log("Purchase successful! Your total is: $" + userTotal.toFixed(2) + ".");
                         console.log("\n----------------------------------------------------------------\n");
-
                     }
                 );
                 connection.query("UPDATE products SET product_sales = product_sales + ? WHERE ?",
-                [
-                            userTotal,
-                    {
-                        item_id: chosenItem.item_id
+                    [
+                        userTotal,
+                        {
+                            item_id: chosenItem.item_id
+                        }
+                    ], function (err) {
+                        if (err) throw err;
+
+                        console.log("\nThank you for shopping at Bamazon.\n");
+
+                        whatNext();
                     }
-                ], function (err) {
-                    if (err) throw err;
-                    //console.log("Product sales for this item updated to $" + productSalesTotal.toFixed(2) + ".");
-                    //console.log("\n----------------------------------------------------------------\n");
-                    console.log("\nThank you for shopping at Bamazon.\n");
-
-                    whatNext();
-                }
-            );
-
-
-
-              }
+                );
+            }
         });
     })
 }

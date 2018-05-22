@@ -59,7 +59,6 @@ var query = "SELECT departments.department_id, departments.department_name, depa
             colWidths: [10, 26, 20, 18, 18]
         });
 
-
         for (let item of res) {
 
             table.push(
